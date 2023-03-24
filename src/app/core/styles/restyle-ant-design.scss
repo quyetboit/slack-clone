@@ -1,0 +1,12 @@
+.wrap-rooms {
+  .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    color: var(--secondary-text-white-color);
+    font-weight: 600;
+    padding: 4px 8px !important;
+  }
+
+  .ant-collapse-content-box {
+    padding: 0 8px !important;
+    color: var(--secondary-text-white-color);
+  }
+}

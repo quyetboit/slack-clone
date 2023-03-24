@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #3F0F3F;
+  --primary-text-black-color: #131313;
+  --secondary-text-black-color: #2E2E2E;
+  --primary-text-white-color: rgb(255, 255, 255);
+  --secondary-text-white-color: rgba(255, 255, 255, 0.7);
+  --background-active: #1164A3;
+  --background-hover: rgba(17, 100, 163, 0.4);
+}
+
+@import './app//core//styles/restyle-ant-design.scss'

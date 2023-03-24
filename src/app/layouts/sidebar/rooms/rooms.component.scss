@@ -1,0 +1,26 @@
+// custom lib
+.wrap-rooms .ant-collapse-header {
+  color: var(--secondary-text-white-color) !important;
+}
+
+.rooms {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.room-item {
+  padding: 4px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--background-hover);
+  }
+}
+
+.room-item.active {
+  background-color: var(--background-active);
+  color: var(--primary-text-white-color);
+  font-weight: 600;
+}

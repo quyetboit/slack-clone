@@ -4,6 +4,8 @@
   </div>
 
   <div class="wrap-rooms-chat">
-    <app-rooms typeRoom="Channels"></app-rooms>
+    <ng-container *ngFor="let item of rooms">
+      <app-rooms [room]="item"></app-rooms>
+    </ng-container>
   </div>
 </div>

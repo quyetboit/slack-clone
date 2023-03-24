@@ -10,12 +10,18 @@
 }
 
 .room-item {
-  padding: 4px 14px;
+  padding: 5px 14px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
 
   &:hover {
-    background-color: var(--background-hover);
+    background-color: rgba($color: #fff, $alpha: 0.15);
+  }
+
+  .room-item-icon {
+    margin-right: 4px;
   }
 }
 
@@ -23,4 +29,32 @@
   background-color: var(--background-active);
   color: var(--primary-text-white-color);
   font-weight: 600;
+}
+
+.hash {
+  width: 14px;
+  text-align: center;
+  display: inline-block;
+}
+
+.circle {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: #ccc;
+  border: 2px solid var(--primary-color);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate3d(50%, 4px, 0);
+}
+
+.circle.active {
+  background-color: green;
+}
+
+.wrap-avatar {
+  position: relative;
+  margin-right: 10px;
 }

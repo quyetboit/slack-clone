@@ -10,6 +10,18 @@
     >
       <ul class="rooms">
         <li class="room-item" *ngFor="let item of room.children">
+          <ng-container *ngIf="room.type === TYPE_MESSAGE.CHANNEL">
+            <ng-container *ngIf="item.isPublic; else public">
+              <span class="room-item-icon hash">#</span>
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="room.type === TYPE_MESSAGE.DIRECT">
+            <span class="wrap-avatar">
+              <nz-avatar [nzShape]="'square'" [nzSize]="18" [nzIcon]="'user'"></nz-avatar>
+              <span [class]="{ circle: true, active: item.isOnline }"></span>
+            </span>
+          </ng-container>
           {{ item.name }}
         </li>
       </ul>
@@ -20,3 +32,8 @@
     </nz-collapse-panel>
   </nz-collapse>
 </div>
+
+
+<ng-template #public>
+  <span class="room-item-icon" nz-icon nzType="lock" nzTheme="outline"></span>
+</ng-template>

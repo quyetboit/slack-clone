@@ -21,21 +21,21 @@ export class SidebarComponent {
     {
       type: TypeMessage.CHANNEL,
       children: [
-        {id: '123', name: 'Frontend Space'},
-        {id: '123', name: 'Backend Space'},
-        {id: '123', name: 'Mobile Space'},
-        {id: '123', name: 'DevOpps Space'},
-        {id: '123', name: 'UI/UX Space'},
+        {id: '123', name: 'Frontend Space', isPublic: false},
+        {id: '123', name: 'Backend Space', isPublic: true},
+        {id: '123', name: 'Mobile Space', isPublic: true},
+        {id: '123', name: 'DevOpps Space', isPublic: false},
+        {id: '123', name: 'UI/UX Space', isPublic: true},
       ]
     },
     {
       type: TypeMessage.DIRECT,
       children: [
-        {id: '123', name: 'Frontend Space'},
-        {id: '123', name: 'Backend Space'},
-        {id: '123', name: 'Mobile Space'},
-        {id: '123', name: 'DevOpps Space'},
-        {id: '123', name: 'UI/UX Space'},
+        {id: '123', name: 'Frontend Space', isOnline: true},
+        {id: '123', name: 'Backend Space', isOnline: true},
+        {id: '123', name: 'Mobile Space', isOnline: true},
+        {id: '123', name: 'DevOpps Space', isOnline: true},
+        {id: '123', name: 'UI/UX Space', isOnline: true},
       ]
     },
   ]

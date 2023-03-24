@@ -1,0 +1,22 @@
+<div class="wrap-rooms">
+  <nz-collapse [nzBordered]="false" [nzGhost]="true">
+    <nz-collapse-panel
+      [nzHeader]="room.type"
+      [nzActive]="true"
+      [nzExpandedIcon]="'caret-right'"
+      [ngStyle]="{
+        color: 'white'
+      }"
+    >
+      <ul class="rooms">
+        <li class="room-item" *ngFor="let item of room.children">
+          {{ item.name }}
+        </li>
+      </ul>
+      <ng-template #expandedIcon let-active>
+        {{ active }}
+        <span nz-icon nzType="caret-right" class="ant-collapse-arrow"></span>
+      </ng-template>
+    </nz-collapse-panel>
+  </nz-collapse>
+</div>

@@ -7,6 +7,7 @@ import { TypeMessage } from 'src/app/core/enums/type-message.enum';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { CreateChannelComponent } from './create-channel/create-channel.component';
+import { AddCoworkersComponent } from './add-coworkers/add-coworkers.component';
 
 @Component({
   selector: 'app-rooms',
@@ -38,6 +39,10 @@ export class RoomsComponent {
   }
 
   openModalAddCoworker () {
-    console.log('Open moadal 2')
+    this.modalService.create({
+      nzTitle: 'Start massage with new coworker',
+      nzContent: AddCoworkersComponent,
+      nzFooter: null,
+    })
   }
 }

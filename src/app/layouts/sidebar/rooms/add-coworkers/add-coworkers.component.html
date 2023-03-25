@@ -1,1 +1,30 @@
-<p>add-coworkers works!</p>
+<form nz-form nzLayout="horizontal">
+  <nz-form-item class="required-control">
+    <nz-form-label [nzSpan]="6" nzFor="name">Name coworker</nz-form-label>
+    <nz-form-control [nzSpan]="18">
+      <input
+        nz-input
+        [formControl]="name"
+        name="name"
+        type="text"
+        id="name"
+        placeholder="Enter name coworker to search"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <ul class="coworker-list">
+    <li class="coworker-item d-flex jc-space-between" *ngFor="let item of users">
+      <div class="wrap-info">
+        <nz-avatar class="mr-12" [nzShape]="'square'" [nzSize]="32" [nzSrc]="item.photoURL"></nz-avatar>
+        <span class="user-name">{{ item.displayName }}</span>
+      </div>
+
+      <button nz-button nzType="primary">Start Message</button>
+    </li>
+  </ul>
+</form>
+
+<div class="d-flex jc-end">
+  <button nz-button nzType="default">Cancel</button>
+</div>

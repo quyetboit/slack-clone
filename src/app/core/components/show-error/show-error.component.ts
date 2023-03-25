@@ -16,7 +16,6 @@ export class ShowErrorComponent {
   @Input() controlName = '';
 
   get keyError () {
-    console.log('Control: ', this.control)
     const key = (this.control && this.control.errors) ? Object.keys(this.control?.errors)[0] : '';
     return key;
   }

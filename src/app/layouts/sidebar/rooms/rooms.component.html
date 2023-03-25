@@ -24,15 +24,27 @@
           </ng-container>
           {{ item.name }}
         </li>
+
+        <!-- Button add channel -->
+        <li class="room-item" *ngIf="room.type === TYPE_MESSAGE.CHANNEL" (click)="openModalCreateChannel()">
+          <span class="room-item-icon" nz-icon nzType="plus-square" nzTheme="outline"></span>
+          <span>Browser channels</span>
+        </li>
+
+          <!-- Button New Direct Message -->
+        <li class="room-item" *ngIf="room.type === TYPE_MESSAGE.DIRECT" (click)="openModalAddCoworker()">
+          <span class="room-item-icon" nz-icon nzType="plus-square" nzTheme="outline"></span>
+          <span>Add coworker</span>
+        </li>
       </ul>
-      <ng-template #expandedIcon let-active>
-        {{ active }}
-        <span nz-icon nzType="caret-right" class="ant-collapse-arrow"></span>
-      </ng-template>
     </nz-collapse-panel>
   </nz-collapse>
 </div>
 
+<ng-template #expandedIcon let-active>
+  {{ active }}
+  <span nz-icon nzType="caret-right" class="ant-collapse-arrow"></span>
+</ng-template>
 
 <ng-template #public>
   <span class="room-item-icon" nz-icon nzType="lock" nzTheme="outline"></span>

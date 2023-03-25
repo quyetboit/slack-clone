@@ -1,0 +1,17 @@
+<div class="required">
+  <ng-container *ngIf="control && control.invalid && (control.dirty || control.touched)">
+    <div [ngSwitch]="keyError">
+      <ng-container *ngSwitchCase="'required'">
+        {{ controlName }} not be empty
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'pattern'">
+        {{ controlName }} malformed
+      </ng-container>
+
+      <ng-container *ngSwitchDefault>
+        {{ control['errors'] ? control['errors']['message'] : ''}}
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

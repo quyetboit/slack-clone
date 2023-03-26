@@ -1,8 +1,6 @@
-import { FormControl } from "@angular/forms";
-
 export interface User {
   uid: string,
   displayName: string,
-  photoURL: string,
+  photoUrl?: string,
   email: string,
 }

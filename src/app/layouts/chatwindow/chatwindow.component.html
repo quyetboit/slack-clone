@@ -1,16 +1,58 @@
 <div class="wrapper">
-  <div class="header">
-    <div class="info">
-      <ng-container *ngIf="type === TYPE_MESSAGE_ENUM.DIRECT; else channel">
-      </ng-container>
+  <div class="header pl-16 pr-16">
+    <ng-container *ngIf="chatInfo.type === TYPE_MESSAGE_ENUM.DIRECT; else channel">
+      <div class="wrap-info-direct">
+        <span class="info-direct-avatar mr-6">
+          <ng-container *ngIf="chatInfo.users[0]?.photoUrl; else noPhotoUrl">
+            <nz-avatar
+              nzShape="square"
+              [nzSrc]="chatInfo.users[0].photoUrl"
+            ></nz-avatar>
+          </ng-container>
 
-      <ng-template #channel></ng-template>
-    </div>
+          <ng-template #noPhotoUrl>
+            <nz-avatar
+              nzShape="square"
+              [nzText]="chatInfo.users[0].displayName[0].toUpperCase()"
+            ></nz-avatar>
+          </ng-template>
+        </span>
+        <span class="info-direct-name fw-700">
+          {{ chatInfo.users[0].displayName }}
+        </span>
+      </div>
+    </ng-container>
+
+    <ng-template #channel>
+      <div class="wrap-info-channel d-flex ai-center jc-space-between w-full">
+        <div class="info-channel">
+          <ng-container *ngIf="chatInfo.isPublic; else private">
+            <span class="mr-4">#</span>
+          </ng-container>
+
+          <ng-template #private>
+            <span class="mr-4" nz-icon nzType="lock" nzTheme="fill"></span>
+          </ng-template>
+          <span class="name">DevOpps Space</span>
+        </div>
+
+        <div class="users d-flex ai-center">
+          <button nz-button nzType="primary" class="mr-6">
+            <span nz-icon nzType="plus" nzTheme="outline"></span>
+            Invite
+          </button>
+
+          <app-avatar-custom
+            [users]="chatInfo.users"
+          ></app-avatar-custom>
+        </div>
+      </div>
+    </ng-template>
   </div>
 
-  <div class="chat pl-16 pr-16 pb-16 d-flex flex-column jc-end">
+  <div class="chat pl-16 pb-16 d-flex flex-column jc-end">
     <div class="message mb-8">
-      <ng-container *ngFor="let message of messages">
+      <ng-container *ngFor="let message of chatInfo.messages">
         <app-message [message]="message"></app-message>
       </ng-container>
     </div>

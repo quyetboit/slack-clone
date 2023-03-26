@@ -4,7 +4,16 @@
 
 .header {
   height: var(--height-header);
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid #ccc;
+}
+
+.wrap-info-channel {
+  .info-channel {
+    font-size: 18px;
+    font-weight: 700;
+  }
 }
 
 .chat {

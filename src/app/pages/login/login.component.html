@@ -5,13 +5,16 @@
 
     <div class="wrap-button">
       <ng-container *ngFor="let item of methodLogin">
-        <button nz-button class="button d-flex ai-center" [disabled]="item.isDisable">
-          <img [src]="item.logo" [alt]="item.name" class="logo">
+        <button
+          nz-button
+          class="button d-flex ai-center"
+          [disabled]="item.isDisable"
+          (click)="handleLoginWithFacebook()"
+        >
+          <img [src]="item.logo" [alt]="item.name" class="logo" />
           <span class="button-label ml-8"> {{ item.name }}</span>
         </button>
       </ng-container>
     </div>
-
   </div>
 </div>
-

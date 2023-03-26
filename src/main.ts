@@ -1,5 +1,6 @@
 import { APP_ROUTING } from './app/app.routing';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { AppComponent } from './app/app.component';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -18,6 +19,7 @@ bootstrapApplication(AppComponent, {
       HttpClientModule,
       provideFirebaseApp(() => initializeApp(environments.firebaseConfig)),
       provideFirestore(() => getFirestore()),
+      provideAuth(() => getAuth()),
     ])
   ]
 })

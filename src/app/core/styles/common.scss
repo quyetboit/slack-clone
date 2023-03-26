@@ -31,6 +31,18 @@
   display: flex;
 }
 
+.f-1 {
+  flex: 1;
+}
+
+.f-shrink-0 {
+  flex-shrink: 0;
+}
+
+.f-grow {
+  flex-grow: 1;
+}
+
 .d-inline-flex {
   display: inline-flex;
 }
@@ -351,4 +363,89 @@
 
 .pt-20 {
   padding-top: 20px;
+}
+
+// border radius
+.br-4 {
+ border-radius: 4px;
+}
+
+.br-6 {
+  border-radius: 6px;
+}
+
+.br-12 {
+  border-radius: 12px;
+}
+
+.br-50pt {
+  border-radius: 50%;
+}
+
+.br-full {
+  border-radius: 9999;
+}
+
+// effects
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  opacity: 0.7;
+}
+
+
+// font size
+.fs-6 {
+  font-size: 6px;
+}
+
+.fs-8 {
+  font-size: 8px;
+}
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-20 {
+  font-size: 8px;
+}
+
+.fs-24 {
+  font-size: 24px;
+}
+
+.fs-30 {
+  font-size: 30px;
+}
+
+// font weight
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
 }

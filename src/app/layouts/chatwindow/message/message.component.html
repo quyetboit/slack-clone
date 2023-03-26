@@ -1,0 +1,12 @@
+<div class="d-flex mt-8 mb-8">
+  <nz-avatar class="f-shrink-0" nzShape="square" nzSize="large" [nzSrc]="message.photoUrl"></nz-avatar>
+  <div class="info ml-8">
+    <div class="head d-flex mb-4">
+      <h4 class="name fw-700 m-0">{{ message.displayName }}</h4>
+      <span class="time ml-12 fs-10">{{ message.createdAt }}</span>
+    </div>
+    <div class="content">
+      {{ message.contentMessage }}
+    </div>
+  </div>
+</div>

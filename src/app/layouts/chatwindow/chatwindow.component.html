@@ -1,1 +1,29 @@
-<p>chatwindow works!</p>
+<div class="wrapper">
+  <div class="header">
+    <div class="info">
+      <ng-container *ngIf="type === TYPE_MESSAGE_ENUM.DIRECT; else channel">
+      </ng-container>
+
+      <ng-template #channel></ng-template>
+    </div>
+  </div>
+
+  <div class="chat pl-16 pr-16 pb-16 d-flex flex-column jc-end">
+    <div class="message mb-8">
+      <ng-container *ngFor="let message of messages">
+        <app-message [message]="message"></app-message>
+      </ng-container>
+    </div>
+
+    <div class="send-message d-flex p-6 br-4">
+      <input class="f-1" nz-input type="text" placeholder="Enter message ..." />
+      <span
+        class="ml-6 pointer d-flex ai-center"
+        style="font-size: 24px"
+        nz-icon
+        nzType="send"
+        nzTheme="outline"
+      ></span>
+    </div>
+  </div>
+</div>

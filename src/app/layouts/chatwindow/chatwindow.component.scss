@@ -1,0 +1,20 @@
+.wrapper {
+
+}
+
+.header {
+  height: var(--height-header);
+  border-bottom: 1px solid #ccc;
+}
+
+.chat {
+  height: calc(100vh - var(--height-header));
+}
+
+.message {
+  overflow-y: auto;
+}
+
+.send-message {
+  border: 1px solid #ccc;
+}

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 export const LOGIN_IMPORT_MODULES = [
   CommonModule,
-  NzIconModule ,
+  NzButtonModule,
 ]

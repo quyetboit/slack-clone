@@ -7,13 +7,7 @@ export const APP_ROUTING: Routes = [
   },
 
   {
-    path: 'chat',
+    path: '',
     loadComponent: () => import('./pages/chat/chat.component').then(c => c.ChatComponent)
   },
-
-  {
-    path: '',
-    redirectTo: 'chat',
-    pathMatch: 'full',
-  }
 ]

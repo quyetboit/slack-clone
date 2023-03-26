@@ -4,31 +4,14 @@
     <p class="descript">We're Team That Guider Each Other</p>
 
     <div class="wrap-button">
-      <button class="button">
-        <span class="button-icon" nz-icon nzType="facebook" nzTheme="outline"></span>
-        <span class="button-label">Login With Facebook</span>
-      </button>
-
-      <button class="button">
-        <span class="button-icon" nz-icon nzType="google" nzTheme="outline"></span>
-        <span class="button-label">Login With Google</span>
-      </button>
-
-      <button class="button">
-        <span class="button-icon" nz-icon nzType="github" nzTheme="outline"></span>
-        <span class="button-label">Login With Github</span>
-      </button>
-
-      <button class="button">
-        <span class="button-icon" nz-icon nzType="twitter" nzTheme="outline"></span>
-        <span class="button-label">Login With Twiter</span>
-      </button>
-
-      <button class="button">
-        <span class="button-icon" nz-icon nzType="apple" nzTheme="outline"></span>
-        <span class="button-label">Login With Apple</span>
-      </button>
+      <ng-container *ngFor="let item of methodLogin">
+        <button nz-button class="button d-flex ai-center" [disabled]="item.isDisable">
+          <img [src]="item.logo" [alt]="item.name" class="logo">
+          <span class="button-label ml-8"> {{ item.name }}</span>
+        </button>
+      </ng-container>
     </div>
+
   </div>
 </div>
 

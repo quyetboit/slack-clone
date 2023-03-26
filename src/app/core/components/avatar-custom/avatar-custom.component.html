@@ -1,0 +1,26 @@
+<nz-avatar-group>
+  <ng-container *ngFor="let item of users; index as i">
+    <ng-container *ngIf="i + 1 <= maxCount">
+      <nz-avatar
+        *ngIf="item.photoUrl; else noPhotoUrl"
+        nzSize="small"
+        [nzSrc]="item.photoUrl"
+      ></nz-avatar>
+
+      <ng-template #noPhotoUrl>
+        <nz-avatar
+          nzSize="small"
+          [nzText]="item.displayName[0].toUpperCase()"
+        ></nz-avatar>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="users.length > maxCount - 1">
+    <nz-avatar
+      style="background-color: #fde3cf; color: #f56a00"
+      [nzText]="'+' + (users.length - maxCount + 1)"
+      nzSize="small"
+    ></nz-avatar>
+  </ng-container>
+</nz-avatar-group>

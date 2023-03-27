@@ -1,7 +1,13 @@
 <div class="wraper">
   <div class="user-info">
-    <nz-avatar nzText="Q"></nz-avatar>
-    <h4>Lê Văn Quyết</h4>
+    <ng-container *ngIf="curentUser.photoUrl; else noPhotoUrl">
+      <nz-avatar [nzSrc]="curentUser.photoUrl"></nz-avatar>
+    </ng-container>
+
+    <ng-template #noPhotoUrl>
+      <nz-avatar [nzText]="curentUser.displayName[0].toUpperCase()"></nz-avatar>
+    </ng-template>
+    <h4>{{ curentUser.displayName }}</h4>
   </div>
 
   <button nz-button nzType="default" (click)="onLogout()">Logout</button>

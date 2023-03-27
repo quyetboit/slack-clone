@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Auth, signInWithPopup, FacebookAuthProvider, connectAuthEmulator, signOut } from "@angular/fire/auth";
 import { connectFirestoreEmulator, Firestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
+import { BehaviorSubject } from "rxjs";
 import { Condition } from "../interfaces/condition.interface";
 import { User } from "../interfaces/user.interface";
 import { FirebaseService } from "./firebase.service";
@@ -55,8 +56,8 @@ export class AuthService {
           this.firebase.addDocument('users', this.currentUser);
         }
 
-        this.router.navigate(['/']);
         localStorage.setItem('userInfo', JSON.stringify(this.currentUser))
+        this.router.navigate(['/']);
       })
       .catch(error => {
         console.log('Has error: ', error)

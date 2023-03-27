@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Auth, signInWithPopup, FacebookAuthProvider, connectAuthEmulator } from "@angular/fire/auth";
+import { Auth, signInWithPopup, FacebookAuthProvider, connectAuthEmulator, signOut } from "@angular/fire/auth";
 import { connectFirestoreEmulator, Firestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { Condition } from "../interfaces/condition.interface";
@@ -54,12 +54,20 @@ export class AuthService {
         if (currentUserSnapshot.empty) {
           this.firebase.addDocument('users', this.currentUser);
         }
-        this.router.navigate(['/']);
 
+        this.router.navigate(['/']);
         localStorage.setItem('userInfo', JSON.stringify(this.currentUser))
       })
       .catch(error => {
         console.log('Has error: ', error)
+      })
+  }
+
+  logout() {
+    signOut(this.auth)
+      .then(() => {
+        this.router.navigate(['/login']);
+        localStorage.removeItem('userInfo');
       })
   }
 }

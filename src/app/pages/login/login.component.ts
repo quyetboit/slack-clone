@@ -52,7 +52,6 @@ export class LoginComponent {
   ) { }
 
   handleLoginWithFacebook() {
-    console.log('Handle in login component')
     this.authService.loginWithFacebook();
   }
 }

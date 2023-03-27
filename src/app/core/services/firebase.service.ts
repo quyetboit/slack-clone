@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
-import { Firestore } from "@angular/fire/firestore";
-import { collection, CollectionReference, DocumentData, query, doc } from "@firebase/firestore";
+import { addDoc, Firestore } from "@angular/fire/firestore";
+import { collection, CollectionReference, DocumentData, query, where, getDocs } from "@firebase/firestore";
+import { Condition } from "../interfaces/condition.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,13 @@ export class FirebaseService {
     return collection(this.fireStore, collectionName)
   }
 
-  // getQueryRef(collectionName: string, condition: any) {
-  //   const collectionRef = collection(this.fireStore, collectionName);
+  addDocument(collectionName: string, data: unknown) {
+    addDoc(collection(this.fireStore, collectionName), data);
+  }
 
-  //   return query(collectionRef, where)
-  // }
+  async getColectionByCondition(collectionName: string, condition: Condition) {
+    const collectionRef =  collection(this.fireStore, collectionName);
+    const queryRef = query(collectionRef, where(condition.fieldName, condition.operator, condition.compareValue));
+    return await getDocs(queryRef);
+  }
 }

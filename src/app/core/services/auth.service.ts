@@ -1,18 +1,24 @@
 import { Injectable } from "@angular/core";
 import { Auth, signInWithPopup, FacebookAuthProvider, connectAuthEmulator } from "@angular/fire/auth";
 import { connectFirestoreEmulator, Firestore } from "@angular/fire/firestore";
+import { Router } from "@angular/router";
+import { Condition } from "../interfaces/condition.interface";
 import { User } from "../interfaces/user.interface";
+import { FirebaseService } from "./firebase.service";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+  currentUser: User | null = null;
   provider: FacebookAuthProvider;
 
   constructor (
     private auth: Auth,
     private fireStore: Firestore,
+    private firebase: FirebaseService,
+    private router: Router,
   ) {
     connectAuthEmulator(this.auth, "http://localhost:9099");
     if (window.location.host.includes('localhost')) {
@@ -27,15 +33,30 @@ export class AuthService {
 
   loginWithFacebook () {
     signInWithPopup(this.auth, this.provider)
-      .then(res => {
-        console.log('Ress: ', res)
-        const user: User = {
+      .then(async res => {
+        this.currentUser = {
           uid: res.user.uid,
           displayName: res.user.displayName || '',
           photoUrl: res.user.photoURL || '',
           email: res.user.email || '',
         }
-        localStorage.setItem('userInfo', JSON.stringify(user))
+
+        const condition: Condition = {
+          fieldName: 'uid',
+          operator: '==',
+          compareValue: this.currentUser.uid,
+        }
+        const currentUserSnapshot = await this.firebase.getColectionByCondition(
+          'users',
+          condition
+        )
+
+        if (currentUserSnapshot.empty) {
+          this.firebase.addDocument('users', this.currentUser);
+        }
+        this.router.navigate(['/']);
+
+        localStorage.setItem('userInfo', JSON.stringify(this.currentUser))
       })
       .catch(error => {
         console.log('Has error: ', error)

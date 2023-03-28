@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
-import { addDoc, Firestore } from "@angular/fire/firestore";
+import { addDoc, Firestore, onSnapshot } from "@angular/fire/firestore";
 import { collection, CollectionReference, DocumentData, query, where, getDocs } from "@firebase/firestore";
 import { Condition } from "../interfaces/condition.interface";
 
@@ -27,5 +27,15 @@ export class FirebaseService {
     const collectionRef =  collection(this.fireStore, collectionName);
     const queryRef = query(collectionRef, where(condition.fieldName, condition.operator, condition.compareValue));
     return await getDocs(queryRef);
+  }
+
+  onSnapshotChange(
+    collectionName: string,
+    condition: Condition,
+    handle: (querySnap: any) => void,
+  ) {
+    const collectionRef =  collection(this.fireStore, collectionName);
+    const q = query(collectionRef, where(condition.fieldName, condition.operator, condition.compareValue));
+    return onSnapshot(q, handle)
   }
 }

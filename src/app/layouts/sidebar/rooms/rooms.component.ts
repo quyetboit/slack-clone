@@ -27,6 +27,7 @@ export class RoomsComponent {
   @Input() directMessages: DirectMessage[] = [];
   @Input() type!: TypeMessage;
   TYPE_MESSAGE = TypeMessage;
+  unsubSnapRooms: any;
 
   constructor (
     private modalService: NzModalService,

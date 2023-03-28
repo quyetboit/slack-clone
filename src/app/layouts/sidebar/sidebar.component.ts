@@ -19,4 +19,5 @@ import { TypeMessage } from 'src/app/core/enums/type-message.enum';
 export class SidebarComponent {
   rooms: Room[] = [];
   directMessages: DirectMessage[] = [];
+  TYPE_MESSAGE = TypeMessage;
 }

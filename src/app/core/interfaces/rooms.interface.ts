@@ -6,9 +6,9 @@ export interface Room {
   isPublic: boolean,
 }
 
-
 export interface DirectMessage {
   id: string,
   name: string,
   isOnline: boolean,
+  photoUrl?: string,
 }

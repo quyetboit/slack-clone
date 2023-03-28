@@ -32,6 +32,10 @@ export class AuthService {
     })
   }
 
+  get currentUserInfo(): User {
+    return JSON.parse(localStorage.getItem('userInfo') || '');
+  }
+
   loginWithFacebook () {
     signInWithPopup(this.auth, this.provider)
       .then(async res => {

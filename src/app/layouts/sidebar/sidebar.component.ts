@@ -17,7 +17,8 @@ import { TypeMessage } from 'src/app/core/enums/type-message.enum';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-  rooms: Room[] = [];
-  directMessages: DirectMessage[] = [];
   TYPE_MESSAGE = TypeMessage;
+  rooms: Room[] = [];
+
+  directMessages: DirectMessage[] = [];
 }

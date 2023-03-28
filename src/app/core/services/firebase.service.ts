@@ -20,7 +20,7 @@ export class FirebaseService {
   }
 
   addDocument(collectionName: string, data: unknown) {
-    addDoc(collection(this.fireStore, collectionName), data);
+    return addDoc(collection(this.fireStore, collectionName), data);
   }
 
   async getColectionByCondition(collectionName: string, condition: Condition) {

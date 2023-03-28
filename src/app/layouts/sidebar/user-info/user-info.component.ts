@@ -21,7 +21,7 @@ export class UserInfoComponent {
   constructor (
     private auth: AuthService,
   ) {
-    this.curentUser = JSON.parse(localStorage.getItem('userInfo') || '');
+    this.curentUser = this.auth.currentUserInfo;
   }
 
   onLogout() {

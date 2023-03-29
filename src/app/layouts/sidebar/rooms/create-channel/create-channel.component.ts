@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../core/services/loading.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -43,10 +44,11 @@ export class CreateChannelComponent implements OnInit  {
     private firebaseService: FirebaseService,
     private notifyService: NzNotificationService,
     private authService: AuthService,
+    private loadingService: LoadingService,
   ) {}
 
   ngOnInit(): void {
-      this.dialogRef
+
   }
 
   handleClickClose () {
@@ -59,6 +61,7 @@ export class CreateChannelComponent implements OnInit  {
       return
     }
 
+    this.loadingService.setLoading(true);
     this.firebaseService
       .addDocument('rooms', {
         name: this.form.value.name,
@@ -66,10 +69,12 @@ export class CreateChannelComponent implements OnInit  {
         createdAt: new Date(),
         members: [this.authService.currentUserInfo.uid],
       }).then(res => {
+        this.loadingService.setLoading(false);
         this.notifyService.success('Success', 'Create channel success');
         this.dialogRef.close();
       }).catch(errors => {
         this.notifyService.error('Error', 'Has error when create channel');
+        this.loadingService.setLoading(false);
         console.log('Errors: ', errors)
       })
   }

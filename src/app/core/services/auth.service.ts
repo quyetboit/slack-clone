@@ -1,3 +1,4 @@
+import { LoadingService } from './loading.service';
 import { Injectable } from "@angular/core";
 import { Auth, signInWithPopup, FacebookAuthProvider, connectAuthEmulator, signOut } from "@angular/fire/auth";
 import { connectFirestoreEmulator, Firestore } from "@angular/fire/firestore";
@@ -20,6 +21,7 @@ export class AuthService {
     private fireStore: Firestore,
     private firebase: FirebaseService,
     private router: Router,
+    private loadingService: LoadingService,
   ) {
     connectAuthEmulator(this.auth, "http://localhost:9099");
     if (window.location.host.includes('localhost')) {
@@ -39,6 +41,7 @@ export class AuthService {
   loginWithFacebook () {
     signInWithPopup(this.auth, this.provider)
       .then(async res => {
+        this.loadingService.setLoading(true);
         this.currentUser = {
           uid: res.user.uid,
           displayName: res.user.displayName || '',
@@ -60,19 +63,27 @@ export class AuthService {
           this.firebase.addDocument('users', this.currentUser);
         }
 
-        localStorage.setItem('userInfo', JSON.stringify(this.currentUser))
+        localStorage.setItem('userInfo', JSON.stringify(this.currentUser));
+        this.loadingService.setLoading(false);
         this.router.navigate(['/']);
       })
       .catch(error => {
+        this.loadingService.setLoading(false);
         console.log('Has error: ', error)
       })
   }
 
   logout() {
+    this.loadingService.setLoading(true);
     signOut(this.auth)
       .then(() => {
+        this.loadingService.setLoading(false);
         this.router.navigate(['/login']);
         localStorage.removeItem('userInfo');
+      })
+      .catch(err => {
+        this.loadingService.setLoading(false);
+        console.log('Hass erorrs when logout: ', err)
       })
   }
 }

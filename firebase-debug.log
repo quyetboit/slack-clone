@@ -185,3 +185,4 @@ Java(TM) SE Runtime Environment (build 19.0.2+7-44)
 
 Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
  
+[debug] [2023-03-28T16:32:47.569Z] Received signal SIGHUP 1

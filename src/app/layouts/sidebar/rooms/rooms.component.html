@@ -1,7 +1,7 @@
 <div class="wrap-rooms">
   <nz-collapse [nzBordered]="false" [nzGhost]="true">
     <nz-collapse-panel
-      [nzHeader]="room.type"
+      [nzHeader]="type"
       [nzActive]="true"
       [nzExpandedIcon]="'caret-right'"
       [ngStyle]="{
@@ -9,30 +9,33 @@
       }"
     >
       <ul class="rooms">
-        <li class="room-item" *ngFor="let item of room.children">
-          <ng-container *ngIf="room.type === TYPE_MESSAGE.CHANNEL">
-            <ng-container *ngIf="item.isPublic; else public">
+        <ng-container *ngIf="type === TYPE_MESSAGE.CHANNEL">
+          <li class="room-item" *ngFor="let item of rooms">
+            <ng-container *ngIf="item.isPublic; else private">
               <span class="room-item-icon hash">#</span>
             </ng-container>
-          </ng-container>
+            {{ item.name }}
+          </li>
+        </ng-container>
 
-          <ng-container *ngIf="room.type === TYPE_MESSAGE.DIRECT">
+        <ng-container *ngIf="type === TYPE_MESSAGE.DIRECT">
+          <li class="room-item" *ngFor="let item of directMessages">
             <span class="wrap-avatar">
               <nz-avatar [nzShape]="'square'" [nzSize]="18" [nzIcon]="'user'"></nz-avatar>
               <span [class]="{ circle: true, active: item.isOnline }"></span>
             </span>
-          </ng-container>
-          {{ item.name }}
-        </li>
+            {{ item.name }}
+          </li>
+        </ng-container>
 
         <!-- Button add channel -->
-        <li class="room-item" *ngIf="room.type === TYPE_MESSAGE.CHANNEL" (click)="openModalCreateChannel()">
+        <li class="room-item" *ngIf="type === TYPE_MESSAGE.CHANNEL" (click)="openModalCreateChannel()">
           <span class="room-item-icon" nz-icon nzType="plus-square" nzTheme="outline"></span>
           <span>Browser channels</span>
         </li>
 
           <!-- Button New Direct Message -->
-        <li class="room-item" *ngIf="room.type === TYPE_MESSAGE.DIRECT" (click)="openModalAddCoworker()">
+        <li class="room-item" *ngIf="type === TYPE_MESSAGE.DIRECT" (click)="openModalAddCoworker()">
           <span class="room-item-icon" nz-icon nzType="plus-square" nzTheme="outline"></span>
           <span>Add coworker</span>
         </li>
@@ -46,6 +49,6 @@
   <span nz-icon nzType="caret-right" class="ant-collapse-arrow"></span>
 </ng-template>
 
-<ng-template #public>
+<ng-template #private>
   <span class="room-item-icon" nz-icon nzType="lock" nzTheme="outline"></span>
 </ng-template>

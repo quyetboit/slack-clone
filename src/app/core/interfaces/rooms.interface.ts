@@ -1,13 +1,14 @@
 import { TypeMessage } from "../enums/type-message.enum";
 
-export interface SubRoom {
+export interface Room {
   id: string,
   name: string,
-  isPublic?: boolean,
-  isOnline?: boolean,
+  isPublic: boolean,
 }
 
-export interface Room {
-  type: TypeMessage,
-  children: SubRoom[],
+export interface DirectMessage {
+  id: string,
+  name: string,
+  isOnline: boolean,
+  photoUrl?: string,
 }

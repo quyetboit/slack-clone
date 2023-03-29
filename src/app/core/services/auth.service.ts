@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   get currentUserInfo(): User {
-    return JSON.parse(localStorage.getItem('userInfo') || '');
+    return localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')!);
   }
 
   loginWithFacebook () {

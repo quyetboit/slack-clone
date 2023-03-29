@@ -7,6 +7,7 @@ import { TypeMessage } from 'src/app/core/enums/type-message.enum';
 import { Condition } from 'src/app/core/interfaces/condition.interface';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Order } from 'src/app/core/interfaces/order.interface';
 
 @Component({
   selector: 'app-sidebar',
@@ -38,9 +39,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
       compareValue: this.authService.currentUserInfo.uid,
     }
 
+    const orderGetChannel: Order = {
+      fieldName: 'isPublic',
+      direciton: 'desc',
+    }
+
     this.unsubSnapRooms = this.firebaseService.onSnapshotChange(
       'rooms',
       conditionGetMyChannel,
+      orderGetChannel,
       (querySnap) => {
         this.rooms = [];
         querySnap.forEach((doc: any) => {
@@ -49,7 +56,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
             id: doc.id,
           })
         })
-        console.log('Romms: ', this.rooms)
       }
     )
   }

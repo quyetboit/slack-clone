@@ -8,6 +8,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { CreateChannelComponent } from './create-channel/create-channel.component';
 import { AddCoworkersComponent } from './add-coworkers/add-coworkers.component';
+import { ChatService } from 'src/app/core/services/chat.service';
 
 @Component({
   selector: 'app-rooms',
@@ -26,12 +27,20 @@ export class RoomsComponent {
   @Input() rooms: Room[] = [];
   @Input() directMessages: DirectMessage[] = [];
   @Input() type!: TypeMessage;
+
   TYPE_MESSAGE = TypeMessage;
-  unsubSnapRooms: any;
 
   constructor (
     private modalService: NzModalService,
+    private chatService: ChatService,
   ) {}
+
+  onSelectRoom(id: string) {
+    this.chatService.setChatSelect({
+      type: TypeMessage.CHANNEL,
+      id,
+    })
+  }
 
   openModalCreateChannel () {
     this.modalService.create({

@@ -16,4 +16,5 @@ import { User } from '../../interfaces/user.interface';
 export class AvatarCustomComponent {
   @Input() users: User[] = [];
   @Input() maxCount: number = 3;
+  @Input() size: 'large' | 'default' | 'small' = 'default';
 }

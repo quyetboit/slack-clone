@@ -10,7 +10,11 @@
     >
       <ul class="rooms">
         <ng-container *ngIf="type === TYPE_MESSAGE.CHANNEL">
-          <li class="room-item" *ngFor="let item of rooms">
+          <li
+            class="room-item"
+            *ngFor="let item of rooms"
+            (click)="onSelectRoom(item.id)"
+          >
             <ng-container *ngIf="item.isPublic; else private">
               <span class="room-item-icon hash">#</span>
             </ng-container>

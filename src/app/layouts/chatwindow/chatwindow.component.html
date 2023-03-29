@@ -1,6 +1,6 @@
-<div class="wrapper">
+<div *ngIf="chatSelect" class="wrapper">
   <div class="header pl-16 pr-16">
-    <ng-container *ngIf="chatInfo.type === TYPE_MESSAGE_ENUM.DIRECT; else channel">
+    <ng-container *ngIf="chatSelect.type === TYPE_MESSAGE_ENUM.DIRECT; else channel">
       <div class="wrap-info-direct">
         <span class="info-direct-avatar mr-6">
           <ng-container *ngIf="chatInfo.users[0]?.photoUrl; else noPhotoUrl">
@@ -24,16 +24,16 @@
     </ng-container>
 
     <ng-template #channel>
-      <div class="wrap-info-channel d-flex ai-center jc-space-between w-full">
+      <div *ngIf="currentRoom" class="wrap-info-channel d-flex ai-center jc-space-between w-full">
         <div class="info-channel">
-          <ng-container *ngIf="chatInfo.isPublic; else private">
+          <ng-container *ngIf="currentRoom.isPublic; else private">
             <span class="mr-4">#</span>
           </ng-container>
 
           <ng-template #private>
             <span class="mr-4" nz-icon nzType="lock" nzTheme="fill"></span>
           </ng-template>
-          <span class="name">DevOpps Space</span>
+          <span class="name"> {{ currentRoom.name }} </span>
         </div>
 
         <div class="users d-flex ai-center">
@@ -42,9 +42,11 @@
             Invite
           </button>
 
-          <app-avatar-custom
-            [users]="chatInfo.users"
-          ></app-avatar-custom>
+          <ng-container *ngIf="members">
+            <app-avatar-custom
+              [users]="members"
+            ></app-avatar-custom>
+          </ng-container>
         </div>
       </div>
     </ng-template>

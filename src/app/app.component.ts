@@ -1,3 +1,4 @@
+import { LoadingService } from './core/services/loading.service';
 import { Component } from '@angular/core';
 import { APP_IMPORTS } from './app.import';
 
@@ -9,5 +10,7 @@ import { APP_IMPORTS } from './app.import';
   imports: APP_IMPORTS,
 })
 export class AppComponent {
-  title = 'slack-clone';
+  constructor (
+    public loadingService: LoadingService
+  ) {}
 }

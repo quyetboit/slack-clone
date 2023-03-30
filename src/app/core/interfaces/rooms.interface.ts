@@ -1,5 +1,3 @@
-import { TypeMessage } from "../enums/type-message.enum";
-
 export interface Room {
   id: string,
   name: string,

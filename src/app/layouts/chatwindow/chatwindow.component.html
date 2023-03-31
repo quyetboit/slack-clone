@@ -60,14 +60,27 @@
     </div>
 
     <div class="send-message d-flex p-6 br-4">
-      <input class="f-1" nz-input type="text" placeholder="Enter message ..." />
-      <span
-        class="ml-6 pointer d-flex ai-center"
-        style="font-size: 24px"
-        nz-icon
-        nzType="send"
-        nzTheme="outline"
-      ></span>
+      <input class="f-1" nz-input type="text" [formControl]="messageControl" placeholder="Enter message ..." />
+      <ng-container *ngIf="isSendingMessage; else sendBtn">
+        <span
+          (click)="sendMessage()"
+          class="ml-6 pointer d-flex ai-center"
+          style="font-size: 24px"
+          nz-icon
+          nzType="loading"
+          nzTheme="outline"
+        ></span>
+      </ng-container>
+      <ng-template #sendBtn>
+        <span
+          (click)="sendMessage()"
+          class="ml-6 pointer d-flex ai-center"
+          style="font-size: 24px"
+          nz-icon
+          nzType="send"
+          nzTheme="outline"
+        ></span>
+      </ng-template>
     </div>
   </div>
 </div>

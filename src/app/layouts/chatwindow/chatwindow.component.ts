@@ -1,3 +1,6 @@
+import { NzNotificationService, NzNotificationModule } from 'ng-zorro-antd/notification';
+import { Auth } from '@angular/fire/auth';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -30,6 +33,8 @@ import { Room } from 'src/app/core/interfaces/rooms.interface';
     NzAvatarModule,
     NzIconModule,
     AvatarCustomComponent,
+    ReactiveFormsModule,
+    NzNotificationModule,
   ],
   templateUrl: './chatwindow.component.html',
   styleUrls: ['./chatwindow.component.scss']
@@ -40,11 +45,15 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
   chatSelect: ChatSelect | null = null;
   currentRoom!: Room;
   members: User[] = [];
+  messageControl: FormControl<string> = new FormControl<string>('', { nonNullable: true });
+  isSendingMessage = false;
 
   constructor (
     private chatService: ChatService,
     private firebaseService: FirebaseService,
     private modalService: NzModalService,
+    private authService: AuthService,
+    private notifyService: NzNotificationService,
   ) {}
   chatInfo: ChatInfo = {
     type: TypeMessage.DIRECT,
@@ -201,6 +210,31 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
         currentRoom: this.currentRoom
       }
     })
+  }
+
+  sendMessage() {
+    const contentMessage = this.messageControl.value;
+    const data = {
+      roomId: this.currentRoom.id,
+      messages: [
+        {
+          time: new Date(),
+          ...this.authService.currentUserInfo,
+          content: contentMessage,
+        }
+      ]
+    }
+
+    this.isSendingMessage = true;
+    this.firebaseService
+      .addDocument('MessagesChannel', data)
+      .then(() => {
+        this.isSendingMessage = false;
+      })
+      .catch(() => {
+        this.notifyService.error('Error', 'Has error when send message');
+        this.isSendingMessage = false;
+      })
   }
 
   ngOnDestroy(): void {

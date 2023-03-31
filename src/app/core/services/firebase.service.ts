@@ -67,4 +67,11 @@ export class FirebaseService {
     const docRef = doc(this.fireStore, collectionName, id);
     return onSnapshot(docRef, handler);
   }
+
+  // sendMessageChannel(
+  //   collectionName: string,
+
+  // ) {
+
+  // }
 }

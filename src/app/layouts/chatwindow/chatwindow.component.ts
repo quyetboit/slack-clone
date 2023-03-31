@@ -14,6 +14,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/interfaces/user.interface';
 import { ChatSelect } from 'src/app/core/interfaces/chat-select.interface';
 import { filter } from 'rxjs';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { InviteMemberComponent } from './invite-member/invite-member.component';
+import { Room } from 'src/app/core/interfaces/rooms.interface';
 
 @Component({
   selector: 'app-chatwindow',
@@ -35,13 +38,13 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
   TYPE_MESSAGE_ENUM = TypeMessage;
   unSubsribeRoom: any;
   chatSelect: ChatSelect | null = null;
-  currentRoom: any;
+  currentRoom!: Room;
   members: User[] = [];
 
   constructor (
-    private authService: AuthService,
     private chatService: ChatService,
     private firebaseService: FirebaseService,
+    private modalService: NzModalService,
   ) {}
   chatInfo: ChatInfo = {
     type: TypeMessage.DIRECT,
@@ -162,7 +165,9 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.chatService.chatSelect
-      .pipe(filter((chat) => chat?.id !== this.currentRoom?.id))
+      .pipe(filter((chat) => {
+        return chat?.id !== this.currentRoom?.id;
+      }))
       .subscribe(async chatSelect => {
         this.chatSelect = chatSelect;
         if (!!chatSelect) {
@@ -177,24 +182,24 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
                               )
                 this.members.push(user.docs[0].data() as User);
               })
-          })
-          // const snapShot = await this.firebaseService.getDocById('rooms', chatSelect.id!);
-          // this.currentRoom = snapShot.data();
-          // console.log('Current Room: ', this.currentRoom)
-
-          // this.currentRoom.members.forEach(async (uid: string) => {
-          //   const user = await this.firebaseService
-          //                 .getColectionByCondition(
-          //                   'users',
-          //                   { fieldName: 'uid', operator: '==', compareValue: uid}
-          //                 )
-          //   this.members.push(user.docs[0].data() as User);
-          // })
+            }
+          )
         }
       })
   }
 
+  openPopupInvite(): void {
+    this.modalService.create({
+      nzContent: InviteMemberComponent,
+      nzTitle: 'Invite member',
+      nzFooter: null,
+      nzComponentParams: {
+        currentRoom: this.currentRoom
+      }
+    })
+  }
+
   ngOnDestroy(): void {
-      this.unSubsribeRoom();
+      // this.unSubsribeRoom();
   }
 }

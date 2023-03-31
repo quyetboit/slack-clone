@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
-import { addDoc, doc, Firestore, getDoc, onSnapshot, orderBy } from "@angular/fire/firestore";
+import { addDoc, doc, Firestore, getDoc, onSnapshot, orderBy, setDoc } from "@angular/fire/firestore";
 import { collection, CollectionReference, DocumentData, query, where, getDocs } from "@firebase/firestore";
 import { Condition } from "../interfaces/condition.interface";
 import { Order } from "../interfaces/order.interface";
@@ -25,14 +25,24 @@ export class FirebaseService {
   }
 
   async getColectionByCondition(collectionName: string, condition: Condition) {
-    const collectionRef =  collection(this.fireStore, collectionName);
+    console.log('Condition: ', condition);
+    const collectionRef = collection(this.fireStore, collectionName);
     const queryRef = query(collectionRef, where(condition.fieldName, condition.operator, condition.compareValue));
     return await getDocs(queryRef);
   }
 
   async getDocById(collectionName: string, id: string) {
-    const docRef =  doc(this.fireStore, collectionName, id);
+    const docRef = doc(this.fireStore, collectionName, id);
     return await getDoc(docRef);
+  }
+
+  updateDocument(
+    collectionName: string,
+    id: string,
+    data: any
+  ) {
+    const docRef = doc(this.fireStore, collectionName, id);
+    return setDoc(docRef, data);
   }
 
   onSnapshotChange(

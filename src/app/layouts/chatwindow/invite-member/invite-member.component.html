@@ -1,0 +1,33 @@
+<form nz-form nzLayout="vertical" [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label>Select Users</nz-form-label>
+    <nz-form-control>
+      <nz-select
+        nzMode="multiple"
+        nzPlaceHolder="Select users"
+        nzAllowClear
+        nzShowSearch
+        formControlName="selectedUser"
+      >
+        <ng-container *ngFor="let user of users">
+          <nz-option *ngIf="!isLoading" [nzValue]="user.uid" [nzLabel]="user.displayName"></nz-option>
+        </ng-container>
+        <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+          <span nz-icon nzType="loading" class="loading-icon"></span>
+          Loading Data...
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<div class="mt-20 d-flex jc-end">
+  <button
+    nz-button
+    nzType="primary"
+    (click)="handleInvite()"
+  >
+    <span nz-icon nzType="plus" nzTheme="outline"></span>
+    Invite
+  </button>
+</div>

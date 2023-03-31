@@ -166,18 +166,30 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
       .subscribe(async chatSelect => {
         this.chatSelect = chatSelect;
         if (!!chatSelect) {
-          const snapShot = await this.firebaseService.getDocById('rooms', chatSelect.id!);
-          this.currentRoom = snapShot.data();
-          console.log('Current Room: ', this.currentRoom)
-
-          this.currentRoom.members.forEach(async (uid: string) => {
-            const user = await this.firebaseService
-                          .getColectionByCondition(
-                            'users',
-                            { fieldName: 'uid', operator: '==', compareValue: uid}
-                          )
-            this.members.push(user.docs[0].data() as User);
+          console.log('Chat select: ', chatSelect)
+          this.unSubsribeRoom = this.firebaseService.onSnapshotChangeById('rooms', chatSelect.id, (doc) => {
+            this.currentRoom = doc.data();
+            this.currentRoom.members.forEach(async (uid: string) => {
+                const user = await this.firebaseService
+                              .getColectionByCondition(
+                                'users',
+                                { fieldName: 'uid', operator: '==', compareValue: uid}
+                              )
+                this.members.push(user.docs[0].data() as User);
+              })
           })
+          // const snapShot = await this.firebaseService.getDocById('rooms', chatSelect.id!);
+          // this.currentRoom = snapShot.data();
+          // console.log('Current Room: ', this.currentRoom)
+
+          // this.currentRoom.members.forEach(async (uid: string) => {
+          //   const user = await this.firebaseService
+          //                 .getColectionByCondition(
+          //                   'users',
+          //                   { fieldName: 'uid', operator: '==', compareValue: uid}
+          //                 )
+          //   this.members.push(user.docs[0].data() as User);
+          // })
         }
       })
   }

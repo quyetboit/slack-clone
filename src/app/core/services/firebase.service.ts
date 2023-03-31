@@ -49,4 +49,13 @@ export class FirebaseService {
     );
     return onSnapshot(q, handle)
   }
+
+  onSnapshotChangeById(
+    collectionName: string,
+    id: string,
+    handler: (querySnap: any) => void
+  ) {
+    const docRef = doc(this.fireStore, collectionName, id);
+    return onSnapshot(docRef, handler);
+  }
 }

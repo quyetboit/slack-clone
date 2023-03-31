@@ -25,7 +25,6 @@ export class FirebaseService {
   }
 
   async getColectionByCondition(collectionName: string, condition: Condition) {
-    console.log('Condition: ', condition);
     const collectionRef = collection(this.fireStore, collectionName);
     const queryRef = query(collectionRef, where(condition.fieldName, condition.operator, condition.compareValue));
     return await getDocs(queryRef);

@@ -171,9 +171,12 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
       .subscribe(async chatSelect => {
         this.chatSelect = chatSelect;
         if (!!chatSelect) {
-          console.log('Chat select: ', chatSelect)
           this.unSubsribeRoom = this.firebaseService.onSnapshotChangeById('rooms', chatSelect.id, (doc) => {
-            this.currentRoom = doc.data();
+            this.members = [];
+            this.currentRoom = {
+              ...doc.data(),
+              id: doc.id,
+            };
             this.currentRoom.members.forEach(async (uid: string) => {
                 const user = await this.firebaseService
                               .getColectionByCondition(
@@ -182,6 +185,7 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
                               )
                 this.members.push(user.docs[0].data() as User);
               })
+            console.log('Member: ', this.members);
             }
           )
         }

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-import { Room, DirectMessage } from 'src/app/core/interfaces/rooms.interface';
+import { Room, Direct } from 'src/app/core/interfaces/rooms.interface';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { TypeMessage } from 'src/app/core/enums/type-message.enum';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -25,7 +25,7 @@ import { ChatService } from 'src/app/core/services/chat.service';
 })
 export class RoomsComponent {
   @Input() rooms: Room[] = [];
-  @Input() directMessages: DirectMessage[] = [];
+  @Input() directs: Direct[] = [];
   @Input() type!: TypeMessage;
 
   TYPE_MESSAGE = TypeMessage;

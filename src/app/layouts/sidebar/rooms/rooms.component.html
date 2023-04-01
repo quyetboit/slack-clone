@@ -23,12 +23,19 @@
         </ng-container>
 
         <ng-container *ngIf="type === TYPE_MESSAGE.DIRECT">
-          <li class="room-item" *ngFor="let item of directMessages">
+          <li class="room-item" *ngFor="let item of directs">
             <span class="wrap-avatar">
-              <nz-avatar [nzShape]="'square'" [nzSize]="18" [nzIcon]="'user'"></nz-avatar>
+
+              <ng-container *ngIf="item.photoUrl; else noPhotoUrl">
+                <nz-avatar [nzShape]="'square'" [nzSize]="18" [nzSrc]="item.photoUrl"></nz-avatar>
+              </ng-container>
+
+              <ng-template #noPhotoUrl>
+                <nz-avatar [nzShape]="'square'" [nzSize]="18" [nzText]="item.displayName[0].toUpperCase()"></nz-avatar>
+              </ng-template>
               <span [class]="{ circle: true, active: item.isOnline }"></span>
             </span>
-            {{ item.name }}
+            {{ item.displayName }}
           </li>
         </ng-container>
 

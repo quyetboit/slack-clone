@@ -189,6 +189,8 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unSubscribeRoom();
+    if (this.unSubscribeRoom) {
+      this.unSubscribeRoom();
+    }
   }
 }

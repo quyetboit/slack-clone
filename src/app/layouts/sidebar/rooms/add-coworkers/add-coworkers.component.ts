@@ -13,6 +13,8 @@ import { LoadingService } from 'src/app/core/services/loading.service';
 import { Subject, debounceTime } from 'rxjs';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { ChatService } from 'src/app/core/services/chat.service';
+import { TypeMessage } from 'src/app/core/enums/type-message.enum';
 
 @Component({
   selector: 'app-add-coworkers',
@@ -38,6 +40,7 @@ export class AddCoworkersComponent implements OnInit {
     private loadingService: LoadingService,
     private modalRef: NzModalRef,
     private notifyService: NzNotificationService,
+    private chatService: ChatService,
   ) { }
 
   name: FormControl<string> = this.fb.nonNullable.control('');
@@ -106,13 +109,24 @@ export class AddCoworkersComponent implements OnInit {
           members: [user, this.authService.currentUserInfo],
           time: new Date(),
         }
-      ).then(() => {
+      ).then((directSnapshot) => {
         this.loadingService.setLoading(false);
+        this.chatService.setChatSelect({
+          type: TypeMessage.DIRECT,
+          id: directSnapshot.id,
+        });
         this.close();
       }).catch(() => {
         this.notifyService.error('Errors', 'Has error when start message');
         this.loadingService.setLoading(false);
       })
+    } else {
+      const direct = checkExists.docs[0];
+      this.chatService.setChatSelect({
+        type: TypeMessage.DIRECT,
+        id: direct.id,
+      });
+      this.modalRef.close();
     }
   }
 

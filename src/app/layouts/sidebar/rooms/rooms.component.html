@@ -14,7 +14,7 @@
             *ngFor="let item of rooms"
             [class]="{
               'room-item': true,
-              active: type === TYPE_MESSAGE.CHANNEL && item.id === id
+              active: chatSelect && chatSelect.type === TYPE_MESSAGE.CHANNEL && item.id === chatSelect.id
             }"
             (click)="onSelectRoom(item.id)"
           >
@@ -26,7 +26,14 @@
         </ng-container>
 
         <ng-container *ngIf="type === TYPE_MESSAGE.DIRECT">
-          <li class="room-item" *ngFor="let item of directs">
+          <li
+            *ngFor="let item of directs"
+            [class]="{
+              'room-item': true,
+              active: chatSelect && chatSelect.type=== TYPE_MESSAGE.DIRECT && item.id === chatSelect.id
+            }"
+            (click)="onSelectDirect(item.id)"
+          >
             <span class="wrap-avatar">
 
               <ng-container *ngIf="item.photoUrl; else noPhotoUrl">

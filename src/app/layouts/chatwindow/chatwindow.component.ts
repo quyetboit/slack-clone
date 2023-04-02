@@ -1,5 +1,4 @@
 import { NzNotificationService, NzNotificationModule } from 'ng-zorro-antd/notification';
-import { Auth } from '@angular/fire/auth';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,11 +18,10 @@ import { ChatSelect } from 'src/app/core/interfaces/chat-select.interface';
 import { filter, tap } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { InviteMemberComponent } from './invite-member/invite-member.component';
-import { Room } from 'src/app/core/interfaces/rooms.interface';
+import { Direct, Room } from 'src/app/core/interfaces/rooms.interface';
 import { Message } from 'src/app/core/interfaces/message.interface';
 import { Condition } from 'src/app/core/interfaces/condition.interface';
 import { Order } from 'src/app/core/interfaces/order.interface';
-import { doc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-chatwindow',
@@ -48,6 +46,7 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
   TYPE_MESSAGE_ENUM = TypeMessage;
   chatSelect: ChatSelect | null = null;
   currentRoom!: Room;
+  currentDirect: Direct | null = null;
   members: User[] = [];
   messages: Message[] = [];
   messageControl: FormControl<string> = new FormControl<string>('', { nonNullable: true });
@@ -94,15 +93,23 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
           }
         }),
         filter((chat) => {
-          return chat?.id !== this.currentRoom?.id;
+          if (this.chatInfo.type === TypeMessage.CHANNEL) {
+            return chat?.id !== this.currentRoom?.id;
+          } else {
+            return chat?.id !== this.currentDirect?.id;
+          }
         })
       )
       .subscribe(async chatSelect => {
         this.chatSelect = chatSelect;
         if (!!chatSelect) {
-          console.log('Condition is true');
-          this.handleGetInfoCurrentRoom(chatSelect.id);
-          this.handleGetMessageOfRooms(chatSelect.id);
+          if (chatSelect.type === TypeMessage.CHANNEL) {
+            this.handleGetInfoCurrentRoom(chatSelect.id);
+            this.handleGetMessageOfRooms(chatSelect.id);
+          } else {
+            this.handleGetInfoCurrentDirect(chatSelect.id);
+            this.handleGetMessageOfDirect(chatSelect.id);
+          }
         }
       })
   }
@@ -150,9 +157,21 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
           resultsConvert.push(item.data());
         })
         this.messages = resultsConvert;
-        console.log('Message: ', this.messages)
       }
     )
+  }
+
+  handleGetInfoCurrentDirect(idDirect: string) {
+    this.unSubscribeRoom = this.firebaseService.onSnapshotChangeById('Direct', idDirect, (doc) => {
+      const currentDoc = doc.data();
+      if (currentDoc) {
+        this.currentDirect = currentDoc.members.find((item: User) => item.uid !== this.authService.currentUserInfo.uid);
+      }
+    })
+  }
+
+  handleGetMessageOfDirect(idDirect: string) {
+
   }
 
   openPopupInvite(): void {

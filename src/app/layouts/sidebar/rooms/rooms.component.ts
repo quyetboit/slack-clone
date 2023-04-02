@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { Room, Direct } from 'src/app/core/interfaces/rooms.interface';
@@ -9,6 +9,7 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { CreateChannelComponent } from './create-channel/create-channel.component';
 import { AddCoworkersComponent } from './add-coworkers/add-coworkers.component';
 import { ChatService } from 'src/app/core/services/chat.service';
+import { ChatSelect } from 'src/app/core/interfaces/chat-select.interface';
 
 @Component({
   selector: 'app-rooms',
@@ -23,23 +24,36 @@ import { ChatService } from 'src/app/core/services/chat.service';
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.scss']
 })
-export class RoomsComponent {
+export class RoomsComponent implements OnInit {
   @Input() rooms: Room[] = [];
   @Input() directs: Direct[] = [];
   @Input() type!: TypeMessage;
 
   TYPE_MESSAGE = TypeMessage;
-  id = '';
+  chatSelect: ChatSelect | null = null;
 
   constructor (
     private modalService: NzModalService,
     private chatService: ChatService,
-  ) {}
+  ) {
+  }
+
+  ngOnInit(): void {
+      this.chatService.chatSelect.subscribe(chat => {
+        this.chatSelect = chat
+      })
+  }
 
   onSelectRoom(id: string) {
-    this.id = id;
     this.chatService.setChatSelect({
       type: TypeMessage.CHANNEL,
+      id,
+    })
+  }
+
+  onSelectDirect(id: string) {
+    this.chatService.setChatSelect({
+      type: TypeMessage.DIRECT,
       id,
     })
   }

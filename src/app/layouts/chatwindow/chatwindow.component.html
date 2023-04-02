@@ -3,22 +3,22 @@
     <ng-container *ngIf="chatSelect.type === TYPE_MESSAGE_ENUM.DIRECT; else channel">
       <div class="wrap-info-direct">
         <span class="info-direct-avatar mr-6">
-          <ng-container *ngIf="chatInfo.users[0]?.photoUrl; else noPhotoUrl">
+          <ng-container *ngIf="currentDirect?.photoUrl; else noPhotoUrl">
             <nz-avatar
               nzShape="square"
-              [nzSrc]="chatInfo.users[0].photoUrl"
+              [nzSrc]="currentDirect?.photoUrl"
             ></nz-avatar>
           </ng-container>
 
           <ng-template #noPhotoUrl>
             <nz-avatar
               nzShape="square"
-              [nzText]="chatInfo.users[0].displayName[0].toUpperCase()"
+              [nzText]="currentDirect ? currentDirect.displayName[0].toUpperCase() : ''"
             ></nz-avatar>
           </ng-template>
         </span>
         <span class="info-direct-name fw-700">
-          {{ chatInfo.users[0].displayName }}
+          {{ currentDirect?.displayName }}
         </span>
       </div>
     </ng-container>

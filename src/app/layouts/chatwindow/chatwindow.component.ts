@@ -6,7 +6,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { TypeMessage } from 'src/app/core/enums/type-message.enum';
 import { MessageComponent } from './message/message.component';
-import { ChatInfo } from 'src/app/core/interfaces/chat-info.interface';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { AvatarCustomComponent } from 'src/app/core/components/avatar-custom/avatar-custom.component';
@@ -143,6 +142,9 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
           resultsConvert.push(item.data());
         })
         this.messages = resultsConvert;
+        setTimeout(() => {
+          this.caculatorScroll();
+        }, 10)
       }
     )
   }
@@ -234,6 +236,16 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
 
   }
 
+  caculatorScroll () {
+    const wrap = document.querySelector('div.message') as HTMLElement;
+    const wrapChat = document.querySelector('div.wrap-chat') as HTMLElement;
+    console.log('Wrap: ', [wrap])
+    console.log('Wrap chat: ', [wrapChat])
+
+    if (wrap.clientHeight < wrapChat.clientHeight) {
+      wrap.scrollTop = (wrapChat.offsetHeight - wrap.clientHeight + 20);
+    }
+  }
 
   ngOnDestroy(): void {
     if (this.unSubscribeRoom) {

@@ -94,7 +94,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
           })
         })
         this.directs = directsConvert;
-        console.log('Direct: ', this.directs)
       }
     )
   }

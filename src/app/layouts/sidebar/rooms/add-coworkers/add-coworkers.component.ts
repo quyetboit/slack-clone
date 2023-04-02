@@ -83,23 +83,37 @@ export class AddCoworkersComponent implements OnInit {
     })
   }
 
-  handleStartMessage(user: User, event: Event) {
+  async handleStartMessage(user: User, event: Event) {
     event.preventDefault();
-    this.loadingService.setLoading(true);
 
-    // this.firebaseService.addDocument(
-    //   'Direct',
-    //   {
-    //     members: [user, this.authService.currentUserInfo],
-    //     time: new Date(),
-    //   }
-    // ).then(() => {
-    //   this.loadingService.setLoading(false);
-    //   this.close();
-    // }).catch(() => {
-    //   this.notifyService.error('Errors', 'Has error when start message');
-    //   this.loadingService.setLoading(false);
-    // })
+    const checkExists = await this.firebaseService.getColectionByCondition(
+      'Direct',
+      {
+        fieldName: 'members',
+        operator: 'in',
+        compareValue: [
+          [this.authService.currentUserInfo, user],
+          [user, this.authService.currentUserInfo]
+        ]
+      }
+    );
+
+    if (checkExists.empty) {
+      this.loadingService.setLoading(true);
+      this.firebaseService.addDocument(
+        'Direct',
+        {
+          members: [user, this.authService.currentUserInfo],
+          time: new Date(),
+        }
+      ).then(() => {
+        this.loadingService.setLoading(false);
+        this.close();
+      }).catch(() => {
+        this.notifyService.error('Errors', 'Has error when start message');
+        this.loadingService.setLoading(false);
+      })
+    }
   }
 
   close() {

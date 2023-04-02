@@ -11,8 +11,11 @@
       <ul class="rooms">
         <ng-container *ngIf="type === TYPE_MESSAGE.CHANNEL">
           <li
-            class="room-item"
             *ngFor="let item of rooms"
+            [class]="{
+              'room-item': true,
+              active: type === TYPE_MESSAGE.CHANNEL && item.id === id
+            }"
             (click)="onSelectRoom(item.id)"
           >
             <ng-container *ngIf="item.isPublic; else private">

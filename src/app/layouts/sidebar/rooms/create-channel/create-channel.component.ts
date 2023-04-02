@@ -68,7 +68,6 @@ export class CreateChannelComponent implements OnInit  {
         isPublic: this.form.value.isPublic,
         createdAt: new Date(),
         members: [this.authService.currentUserInfo.uid],
-        messages: [],
       }).then(res => {
         this.loadingService.setLoading(false);
         this.notifyService.success('Success', 'Create channel success');

@@ -29,6 +29,7 @@ export class RoomsComponent {
   @Input() type!: TypeMessage;
 
   TYPE_MESSAGE = TypeMessage;
+  id = '';
 
   constructor (
     private modalService: NzModalService,
@@ -36,6 +37,7 @@ export class RoomsComponent {
   ) {}
 
   onSelectRoom(id: string) {
+    this.id = id;
     this.chatService.setChatSelect({
       type: TypeMessage.CHANNEL,
       id,

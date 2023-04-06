@@ -7,9 +7,9 @@ export interface Room {
   members: string[],
 }
 
-export interface DirectMessage {
+export interface Direct {
   id: string,
-  name: string,
+  displayName: string,
   isOnline: boolean,
   photoUrl?: string,
 }

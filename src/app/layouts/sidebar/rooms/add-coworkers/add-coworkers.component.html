@@ -20,11 +20,11 @@
         <span class="user-name">{{ item.displayName }}</span>
       </div>
 
-      <button nz-button nzType="primary">Start Message</button>
+      <button nz-button nzType="primary" (click)="handleStartMessage(item, $event)">Start Message</button>
     </li>
   </ul>
 </form>
 
 <div class="d-flex jc-end">
-  <button nz-button nzType="default">Cancel</button>
+  <button nz-button nzType="default" (click)="close()">Cancel</button>
 </div>

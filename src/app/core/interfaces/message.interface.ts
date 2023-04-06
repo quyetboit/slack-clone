@@ -2,6 +2,6 @@ export interface Message {
   uid: string,
   displayName: string,
   photoUrl: string,
-  contentMessage: string,
+  content: string,
   createdAt: string,
 }

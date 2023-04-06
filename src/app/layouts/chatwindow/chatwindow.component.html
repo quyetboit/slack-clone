@@ -3,22 +3,22 @@
     <ng-container *ngIf="chatSelect.type === TYPE_MESSAGE_ENUM.DIRECT; else channel">
       <div class="wrap-info-direct">
         <span class="info-direct-avatar mr-6">
-          <ng-container *ngIf="chatInfo.users[0]?.photoUrl; else noPhotoUrl">
+          <ng-container *ngIf="currentDirect?.photoUrl; else noPhotoUrl">
             <nz-avatar
               nzShape="square"
-              [nzSrc]="chatInfo.users[0].photoUrl"
+              [nzSrc]="currentDirect?.photoUrl"
             ></nz-avatar>
           </ng-container>
 
           <ng-template #noPhotoUrl>
             <nz-avatar
               nzShape="square"
-              [nzText]="chatInfo.users[0].displayName[0].toUpperCase()"
+              [nzText]="currentDirect ? currentDirect.displayName[0].toUpperCase() : ''"
             ></nz-avatar>
           </ng-template>
         </span>
         <span class="info-direct-name fw-700">
-          {{ chatInfo.users[0].displayName }}
+          {{ currentDirect?.displayName }}
         </span>
       </div>
     </ng-container>
@@ -54,33 +54,42 @@
 
   <div class="chat pl-16 pb-16 d-flex flex-column jc-end">
     <div class="message mb-8">
-      <ng-container *ngFor="let message of chatInfo.messages">
-        <app-message [message]="message"></app-message>
-      </ng-container>
+      <div class="wrap-chat">
+        <ng-container *ngFor="let message of messages">
+          <app-message [message]="message"></app-message>
+        </ng-container>
+      </div>
     </div>
 
-    <div class="send-message d-flex p-6 br-4">
-      <input class="f-1" nz-input type="text" [formControl]="messageControl" placeholder="Enter message ..." />
+    <form class="send-message d-flex p-6 br-4">
+      <input
+        class="f-1"
+        nz-input
+        type="text"
+        [formControl]="messageControl"
+        placeholder="Enter message ..."
+        [readOnly]="isSendingMessage"
+      />
       <ng-container *ngIf="isSendingMessage; else sendBtn">
-        <span
-          (click)="sendMessage()"
-          class="ml-6 pointer d-flex ai-center"
-          style="font-size: 24px"
-          nz-icon
-          nzType="loading"
-          nzTheme="outline"
-        ></span>
+        <button
+          ghost
+          nz-button
+          class="ml-6 pointer d-flex ai-center jc-center"
+        >
+          <span nz-icon nzType="loading" nzTheme="outline" class="d-flex ai-center"></span>
+        </button>
       </ng-container>
       <ng-template #sendBtn>
-        <span
+        <button
+          nz-button
+          ghost
           (click)="sendMessage()"
-          class="ml-6 pointer d-flex ai-center"
-          style="font-size: 24px"
-          nz-icon
-          nzType="send"
-          nzTheme="outline"
-        ></span>
+          [disabled]="!messageControl.value"
+          class="ml-6 pointer d-flex ai-center jc-center"
+        >
+          <span nz-icon nzType="send" nzTheme="outline" class="d-flex ai-center"></span>
+        </button>
       </ng-template>
-    </div>
+    </form>
   </div>
 </div>

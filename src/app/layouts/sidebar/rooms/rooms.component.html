@@ -11,8 +11,11 @@
       <ul class="rooms">
         <ng-container *ngIf="type === TYPE_MESSAGE.CHANNEL">
           <li
-            class="room-item"
             *ngFor="let item of rooms"
+            [class]="{
+              'room-item': true,
+              active: chatSelect && chatSelect.type === TYPE_MESSAGE.CHANNEL && item.id === chatSelect.id
+            }"
             (click)="onSelectRoom(item.id)"
           >
             <ng-container *ngIf="item.isPublic; else private">
@@ -23,12 +26,26 @@
         </ng-container>
 
         <ng-container *ngIf="type === TYPE_MESSAGE.DIRECT">
-          <li class="room-item" *ngFor="let item of directMessages">
+          <li
+            *ngFor="let item of directs"
+            [class]="{
+              'room-item': true,
+              active: chatSelect && chatSelect.type=== TYPE_MESSAGE.DIRECT && item.id === chatSelect.id
+            }"
+            (click)="onSelectDirect(item.id)"
+          >
             <span class="wrap-avatar">
-              <nz-avatar [nzShape]="'square'" [nzSize]="18" [nzIcon]="'user'"></nz-avatar>
+
+              <ng-container *ngIf="item.photoUrl; else noPhotoUrl">
+                <nz-avatar [nzShape]="'square'" [nzSize]="18" [nzSrc]="item.photoUrl"></nz-avatar>
+              </ng-container>
+
+              <ng-template #noPhotoUrl>
+                <nz-avatar [nzShape]="'square'" [nzSize]="18" [nzText]="item.displayName[0].toUpperCase()"></nz-avatar>
+              </ng-template>
               <span [class]="{ circle: true, active: item.isOnline }"></span>
             </span>
-            {{ item.name }}
+            {{ item.displayName }}
           </li>
         </ng-container>
 

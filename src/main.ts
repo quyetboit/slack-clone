@@ -9,11 +9,16 @@ import { environments } from './environments/environments';
 import { provideRouter } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import vi from '@angular/common/locales/vi';
+import { NZ_I18N, vi_VN } from 'ng-zorro-antd/i18n';
 
+registerLocaleData(vi)
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(APP_ROUTING),
+    { provide: NZ_I18N, useValue: vi_VN },
     importProvidersFrom([
       BrowserAnimationsModule,
       HttpClientModule,

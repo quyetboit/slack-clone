@@ -113,7 +113,9 @@ export class ChatwindowComponent implements OnInit, OnDestroy {
                           'users',
                           { fieldName: 'uid', operator: '==', compareValue: uid}
                         )
-          members.push(user.docs[0].data() as User);
+          console.log('Condition: ', { fieldName: 'uid', operator: '==', compareValue: uid})
+          console.log('User: ', user);
+          members.push(user.docs[0]?.data() as User);
         })
         this.members = members;
       }

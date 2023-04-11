@@ -23,10 +23,10 @@ export class AuthService {
     private router: Router,
     private loadingService: LoadingService,
   ) {
-    connectAuthEmulator(this.auth, "http://localhost:9099");
-    if (window.location.host.includes('localhost')) {
-      connectFirestoreEmulator(this.fireStore, 'localhost', 8080);
-    }
+    // connectAuthEmulator(this.auth, "http://localhost:9099");
+    // if (window.location.host.includes('localhost')) {
+    //   connectFirestoreEmulator(this.fireStore, 'localhost', 8080);
+    // }
 
     this.provider = new FacebookAuthProvider();
     this.provider.setCustomParameters({
